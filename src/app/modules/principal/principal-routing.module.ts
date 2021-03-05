@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthenticationGuard } from '../../guards/authentication.guard';
 
 //Components
 import { ShipsComponent } from './components/ships/ships.component';
@@ -8,11 +9,11 @@ import { PageTwoComponent } from './components/page-two/page-two.component';
 import { PrincipalComponent } from './principal.component';
 
 const routes: Routes = [
-  { path: '', component: PrincipalComponent,
+  { path: '', component: PrincipalComponent, canActivate: [AuthenticationGuard],
   children: [
-    { path: 'ships', component: ShipsComponent },
-    { path: 'pageOne', component: PageOneComponent },
-    { path: 'pageTwo', component: PageTwoComponent },
+    { path: 'ships', component: ShipsComponent, canActivate: [AuthenticationGuard] },
+    { path: 'pageOne', component: PageOneComponent, canActivate: [AuthenticationGuard] },
+    { path: 'pageTwo', component: PageTwoComponent, canActivate: [AuthenticationGuard] },
   ] }
 ];
 
