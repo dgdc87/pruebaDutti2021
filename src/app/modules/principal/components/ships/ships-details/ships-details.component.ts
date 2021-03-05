@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ShipsState } from '../../../store/ships.state';
 import { SetShipListConfig, SetShipListPage } from '../../../../principal/store/ships.actions';
 import { PaginatePipeArgs } from 'ngx-pagination/dist/paginate.pipe';
+import { ShipsService } from '../../../../../services/ships.service';
 
 declare var $: any;
 
@@ -19,7 +20,6 @@ export class ShipsDetailsComponent implements OnInit {
   @Select(ShipsState) shipState$: Observable<ShipsState>;
 
   config: PaginatePipeArgs;
-  shipId: string = '';
   url: string = '';
   // Modal
   titleDetails: string = '';
@@ -27,7 +27,8 @@ export class ShipsDetailsComponent implements OnInit {
   starship_class: string = '';
 
   constructor(
-    private store: Store
+    private store: Store,
+    private shipsService: ShipsService
   ) {}
 
   ngOnInit(): void {
@@ -51,10 +52,9 @@ export class ShipsDetailsComponent implements OnInit {
     });
   }
 
-  getStarshipId(url) {
-    this.shipId = url.slice(url.length-2, -1)
-    const urlImage = `https://starwars-visualguide.com/assets/img/starships/${this.shipId}.jpg`
-    return urlImage;
+  getStarshipImageUrl(url) {
+    let id = url.slice(url.length-2, -1);
+    return this.shipsService.getShipImageUrl(id);
   }
 
   pageChanged(event){

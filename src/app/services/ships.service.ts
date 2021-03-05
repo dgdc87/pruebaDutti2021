@@ -9,7 +9,8 @@ import { ShipsResponse} from '../models/ships.model';
 })
 export class ShipsService {
 
-  url: string = 'https://swapi.dev/api/starships/'
+  url: string = 'https://swapi.dev/api/starships/';
+  imageUrl: string = 'https://starwars-visualguide.com/assets/img/starships/';
   headerDict = {
     'Authorization': 'none',
     'Access-Control-Allow-Origin': '*'
@@ -24,5 +25,9 @@ export class ShipsService {
     return this.http.get(`${this.url}?page=${page}`).pipe(
       map( (data: ShipsResponse) => { return data })
       );
+  }
+
+  getShipImageUrl(id){
+    return `${this.imageUrl}${id}.jpg`
   }
 }
