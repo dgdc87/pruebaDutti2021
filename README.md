@@ -35,4 +35,6 @@ Navigate to `http://localhost:4200/`.
 
 # Notas del desarrollador:
 
+- Para el patrón redux he usado la librería  https://www.ngxs.io/.
+
 

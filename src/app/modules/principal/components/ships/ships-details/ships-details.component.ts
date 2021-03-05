@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Store, Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { ShipsState } from '../../../store/ships.state';
+import { SetShipListConfig, SetShipListPage } from '@modules/principal/store/ships.actions';
+import { PaginatePipeArgs } from 'ngx-pagination/dist/paginate.pipe';
+
 declare var $: any;
 
 
@@ -9,8 +15,10 @@ declare var $: any;
 })
 export class ShipsDetailsComponent implements OnInit {
 
-  @Input() dataList: any;
-  config: any;
+  shipList: Array<any> = [];
+  @Select(ShipsState) shipState$: Observable<ShipsState>;
+
+  config: PaginatePipeArgs;
   shipId: string = '';
   url: string = '';
   // Modal
@@ -18,25 +26,39 @@ export class ShipsDetailsComponent implements OnInit {
   modelDetails: string = '';
   starship_class: string = '';
 
-  constructor() {
-  }
+  constructor(
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-      this.config = {
-        itemsPerPage: 5,
-        currentPage: 1,
-        totalItems: this.dataList.length
-      };
+    this.config = {
+      itemsPerPage: 5,
+      currentPage: 1,
+      totalItems: 0
+    };
+    this.shipState$.subscribe( (shipState: ShipsState) =>{
+      if(!shipState){
+        this.store.dispatch( new SetShipListConfig(this.config));
+      }else{
+        this.shipList = shipState.shipsList;
+      }
+
+      if(!shipState || !shipState.shipListConfig){
+        this.store.dispatch( new SetShipListConfig(this.config));
+      }else{
+        this.config = shipState.shipListConfig;
+      }
+    });
   }
 
   getStarshipId(url) {
-    this.shipId = url.slice(0, -1)
-    const urlImage = `${this.shipId}.jpg`
-    return urlImage !== "";
+    this.shipId = url.slice(url.length-2, -1)
+    const urlImage = `https://starwars-visualguide.com/assets/img/starships/${this.shipId}.jpg`
+    return urlImage;
   }
 
   pageChanged(event){
-    this.config.currentPage = event;
+    this.store.dispatch( new SetShipListPage(event));
   }
 
   openDetails(details) {
