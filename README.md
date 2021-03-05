@@ -37,4 +37,8 @@ Navigate to `http://localhost:4200/`.
 
 - Para el patrón redux he usado la librería  https://www.ngxs.io/.
 
+- El planteamiento para reducir el número de consultas al servidor ha sido utilizar service workers de manera que gran parte de los archivos de la aplicación serán almacenados en la caché. Además la paginación de la pantalla con el listado de naves, va almacenando el listado de de naves a mostrar sin necesidad de volver a lanzar consultas ya hechas.
 
+npm install http-server -g
+ng build --prod --aot --output-hashing=none
+http-server .\dist\massimo-dutti\
