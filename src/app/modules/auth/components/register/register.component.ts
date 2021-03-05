@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-
-// JSON
-import usersList from 'src/assets/json/users.json';
+import { AuthService } from '@services/auth.service';
+import { User } from '@models/user.model';
+import { isError } from 'util';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -32,12 +33,17 @@ export class RegisterComponent implements OnInit {
 
   registerUser() {
     if (this.registerForm.invalid) { return }
-    // TODO : Falta integrar el servicio para registrar al usuario
-    // JSON simulando usuarios
-    var userLogin = this.registerForm.value;
-    usersList.push(userLogin)
-    console.log('User Register -->', usersList)
-    this.router.navigate(['/principal/ships'])
+    let user: User = {
+      first_name: this.registerForm.value.first_name,
+      email: this.registerForm.value.email,
+      username: this.registerForm.value.username,
+      last_name: this.registerForm.value.last_name
+    };
+    this.authService.register(user).subscribe( data => {
+      this.router.navigate(['/principal/ships'])
+    },error => {
+      alert(error);
+    })
 
   }
 

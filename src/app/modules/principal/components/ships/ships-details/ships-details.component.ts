@@ -18,9 +18,9 @@ export class ShipsDetailsComponent implements OnInit {
   modelDetails: string = '';
   starship_class: string = '';
 
-  constructor() { 
+  constructor() {
   }
-  
+
   ngOnInit(): void {
       this.config = {
         itemsPerPage: 5,
