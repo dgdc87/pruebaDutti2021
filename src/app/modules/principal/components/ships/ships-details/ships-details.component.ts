@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ShipsState } from '../../../store/ships.state';
-import { SetShipListConfig, SetShipListPage } from '@modules/principal/store/ships.actions';
+import { SetShipListConfig, SetShipListPage } from '../../../../principal/store/ships.actions';
 import { PaginatePipeArgs } from 'ngx-pagination/dist/paginate.pipe';
 
 declare var $: any;

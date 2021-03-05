@@ -3,7 +3,7 @@ import { ShipsService } from 'src/app/services/ships.service';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ShipsState } from '../../store/ships.state';
-import { SetShipResponse } from '@modules/principal/store/ships.actions';
+import { SetShipResponse } from '../../../principal/store/ships.actions';
 
 @Component({
   selector: 'app-ships',

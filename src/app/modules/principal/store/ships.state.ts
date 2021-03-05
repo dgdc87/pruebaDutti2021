@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State, Action, Selector } from '@ngxs/store';
-import { ShipStatus, ShipsResponse } from '@models/ships.model';
+import { ShipStatus, ShipsResponse } from '../../../models/ships.model';
 import { PaginatePipeArgs } from 'ngx-pagination/dist/paginate.pipe';
 import {
   SetShipListConfig,
